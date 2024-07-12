@@ -43,5 +43,6 @@ if finder.wait(for: .second(5)) { // discover NDI source for 5 second
     if let video: CVPixelBuffer = receiver.capture(for: .milliseconds(100)) {
        SOME_PROCESS(capturedCVPixelBuffer: video)
     }
+  }
 }
 ```
