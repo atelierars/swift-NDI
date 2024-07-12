@@ -144,3 +144,10 @@ extension NDILib {
 		instance.send_send_metadata(object, frame)
 	}
 }
+extension NDIlib_FourCC_type_e: CustomStringConvertible {
+	public var description: String {
+		withUnsafeBytes(of: self) {
+			String(bytes: $0, encoding: .ascii) ?? ""
+		}
+	}
+}
