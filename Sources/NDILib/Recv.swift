@@ -26,7 +26,7 @@ public final class NDIRecv {
 	@usableFromInline
 	let instance: NDIlib_recv_instance_t
 	@inlinable
-	init(description: NDIlib_recv_create_v3_t = .init()) {
+	init(description: NDIlib_recv_create_v3_t) {
 		instance = withUnsafePointer(to: description, NDILib.shared.create(description:)).unsafelyUnwrapped
 	}
 	deinit {
