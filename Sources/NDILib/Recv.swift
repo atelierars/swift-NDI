@@ -7,20 +7,20 @@
 import AVFoundation
 import NDISDK
 public enum NDIRecvBandwidth: NDIlib_recv_bandwidth_e.RawValue {
-	case metadtaOnly	=        -10	// NDIlib_recv_bandwidth_metadata_only.rawValue
-	case audioOnly		=         10	// NDIlib_recv_bandwidth_audio_only.rawValue
-	case lowest			=          0	// NDIlib_recv_bandwidth_lowest.rawValue
-	case highest		=        100	// NDIlib_recv_bandwidth_highest.rawValue
-	case max			= 0x7fffffff	// NDIlib_recv_bandwidth_max.rawValue
+	case metadtaOnly =        -10	// NDIlib_recv_bandwidth_metadata_only.rawValue
+	case audioOnly   =         10	// NDIlib_recv_bandwidth_audio_only.rawValue
+	case lowest      =          0	// NDIlib_recv_bandwidth_lowest.rawValue
+	case highest     =        100	// NDIlib_recv_bandwidth_highest.rawValue
+	case max         = 0x7fffffff	// NDIlib_recv_bandwidth_max.rawValue
 }
 public enum NDIRecvColorFormat: NDIlib_recv_color_format_e.RawValue {
-	case brgxbrga	=          0	// NDIlib_recv_color_format_BGRX_BGRA.rawValue
-	case uyuvbgra	=          1	// NDIlib_recv_color_format_UYVY_BGRA.rawValue
-	case rgbxrgba	=          2	// NDIlib_recv_color_format_RGBX_RGBA.rawValue
-	case uyuvrgba	=          3	// NDIlib_recv_color_format_UYVY_RGBA.rawValue
-	case fastest	=        100	// NDIlib_recv_color_format_fastest.rawValue
-	case best		=        101	// NDIlib_recv_color_format_best.rawValue
-	case max		= 0x7fffffff	// NDIlib_recv_color_format_max.rawValue
+	case brgxbrga =          0	// NDIlib_recv_color_format_BGRX_BGRA.rawValue
+	case uyuvbgra =          1	// NDIlib_recv_color_format_UYVY_BGRA.rawValue
+	case rgbxrgba =          2	// NDIlib_recv_color_format_RGBX_RGBA.rawValue
+	case uyuvrgba =          3	// NDIlib_recv_color_format_UYVY_RGBA.rawValue
+	case fastest  =        100	// NDIlib_recv_color_format_fastest.rawValue
+	case best     =        101	// NDIlib_recv_color_format_best.rawValue
+	case max      = 0x7fffffff	// NDIlib_recv_color_format_max.rawValue
 }
 public final class NDIRecv {
 	@usableFromInline
