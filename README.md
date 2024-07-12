@@ -15,7 +15,7 @@ You might need to manually link `libndi_ios.a`, `libndi_tvos.a` or `libndi.dylib
 
 ## Usage
 
-See the unit test for typical scenario. We have included code examples in the `Snippets` directory within this repository. Please refer to these for guidance on how to use the library.
+See the unit test for a typical scenario. We have also included code example in the `Snippets` directory within this repository. Please refer to these for guidance on how to use this library.
 
 ### Example
 
