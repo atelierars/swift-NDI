@@ -35,7 +35,7 @@ public final class NDIRecv {
 }
 extension NDIRecv {
 	@inlinable
-	public convenience init(colorFormat: NDIRecvColorFormat, bandwidth: NDIRecvBandwidth) {
+	public convenience init(colorFormat: NDIRecvColorFormat, bandwidth: NDIRecvBandwidth = .highest) {
 		self.init(description: .init(
 			source_to_connect_to: .init(),
 			color_format: .init(colorFormat.rawValue),
