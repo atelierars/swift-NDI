@@ -19,7 +19,7 @@ let package = Package(
 			name: "NDILib",
 			dependencies: ["NDISDK"],
 			linkerSettings: [
-				/* We cannot use unsafe flag for application 😭 */
+				/* We cannot use unsafe flag for some application projects 😭 */
 //				.unsafeFlags([
 //					"-L/Library/NDI SDK for Apple/lib/macOS",
 //					"-L/Library/NDI SDK for Apple/lib/iOS",
