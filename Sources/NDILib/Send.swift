@@ -52,6 +52,105 @@ extension NDISend {
 	@discardableResult
 	public func send(frame video: CVPixelBuffer, metadata xml: Optional<String> = .none) -> Result<(), Error> {
 		switch CVPixelBufferGetPixelFormatType(video) {
+		case kCVPixelFormatType_422YpCbCr8 where CVPixelBufferLockBaseAddress(video, .readOnly) == kCVReturnSuccess:
+			defer {
+				CVPixelBufferUnlockBaseAddress(video, .readOnly)
+			}
+			return.success(xml.withOptionalCString {
+				send(frame: NDIlib_video_frame_v2_t(
+					xres: .init(CVPixelBufferGetWidth(video)),
+					yres: .init(CVPixelBufferGetHeight(video)),
+					FourCC: NDIlib_FourCC_video_type_UYVY,
+					frame_rate_N: 0,
+					frame_rate_D: 0,
+					picture_aspect_ratio: 0,
+					frame_format_type: NDIlib_frame_format_type_progressive,
+					timecode: NDIlib_send_timecode_synthesize,
+					p_data: CVPixelBufferGetBaseAddress(video)?.assumingMemoryBound(to: UInt8.self),
+					.init(line_stride_in_bytes: .init(CVPixelBufferGetBytesPerRow(video))),
+					p_metadata: $0,
+					timestamp: 0)
+				)
+			})
+		case kCVPixelFormatType_422YpCbCr_4A_8BiPlanar where CVPixelBufferLockBaseAddress(video, .readOnly) == kCVReturnSuccess:
+			defer {
+				CVPixelBufferUnlockBaseAddress(video, .readOnly)
+			}
+			return.success(xml.withOptionalCString {
+				send(frame: NDIlib_video_frame_v2_t(
+					xres: .init(CVPixelBufferGetWidthOfPlane(video, 0)),
+					yres: .init(CVPixelBufferGetHeightOfPlane(video, 0)),
+					FourCC: NDIlib_FourCC_video_type_UYVA,
+					frame_rate_N: 0,
+					frame_rate_D: 0,
+					picture_aspect_ratio: 0,
+					frame_format_type: NDIlib_frame_format_type_progressive,
+					timecode: NDIlib_send_timecode_synthesize,
+					p_data: CVPixelBufferGetBaseAddressOfPlane(video, 0)?.assumingMemoryBound(to: UInt8.self),
+					.init(line_stride_in_bytes: .init(CVPixelBufferGetBytesPerRowOfPlane(video, 0))),
+					p_metadata: $0,
+					timestamp: 0)
+				)
+			})
+		case kCVPixelFormatType_422YpCbCr16BiPlanarVideoRange where CVPixelBufferLockBaseAddress(video, .readOnly) == kCVReturnSuccess:
+			defer {
+				CVPixelBufferUnlockBaseAddress(video, .readOnly)
+			}
+			return.success(xml.withOptionalCString {
+				send(frame: NDIlib_video_frame_v2_t(
+					xres: .init(CVPixelBufferGetWidth(video)),
+					yres: .init(CVPixelBufferGetHeight(video)),
+					FourCC: NDIlib_FourCC_type_P216,
+					frame_rate_N: 0,
+					frame_rate_D: 0,
+					picture_aspect_ratio: 0,
+					frame_format_type: NDIlib_frame_format_type_progressive,
+					timecode: NDIlib_send_timecode_synthesize,
+					p_data: CVPixelBufferGetBaseAddressOfPlane(video, 0)?.assumingMemoryBound(to: UInt8.self),
+					.init(line_stride_in_bytes: .init(CVPixelBufferGetBytesPerRowOfPlane(video, 0))),
+					p_metadata: $0,
+					timestamp: 0))
+			})
+		case
+			kCVPixelFormatType_420YpCbCr8Planar where CVPixelBufferLockBaseAddress(video, .readOnly) == kCVReturnSuccess,
+			kCVPixelFormatType_420YpCbCr8PlanarFullRange where CVPixelBufferLockBaseAddress(video, .readOnly) == kCVReturnSuccess:
+			defer {
+				CVPixelBufferUnlockBaseAddress(video, .readOnly)
+			}
+			return.success(xml.withOptionalCString {
+				send(frame: NDIlib_video_frame_v2_t(
+					xres: .init(CVPixelBufferGetWidth(video)),
+					yres: .init(CVPixelBufferGetHeight(video)),
+					FourCC: NDIlib_FourCC_video_type_I420,
+					frame_rate_N: 0,
+					frame_rate_D: 0,
+					picture_aspect_ratio: 0,
+					frame_format_type: NDIlib_frame_format_type_progressive,
+					timecode: NDIlib_send_timecode_synthesize,
+					p_data: CVPixelBufferGetBaseAddressOfPlane(video, 0)?.assumingMemoryBound(to: UInt8.self),
+					.init(line_stride_in_bytes: .init(CVPixelBufferGetBytesPerRowOfPlane(video, 0))),
+					p_metadata: $0,
+					timestamp: 0))
+			})
+		case kCVPixelFormatType_420YpCbCr8BiPlanarFullRange where CVPixelBufferLockBaseAddress(video, .readOnly) == kCVReturnSuccess:
+			defer {
+				CVPixelBufferUnlockBaseAddress(video, .readOnly)
+			}
+			return.success(xml.withOptionalCString {
+				send(frame: NDIlib_video_frame_v2_t(
+					xres: .init(CVPixelBufferGetWidth(video)),
+					yres: .init(CVPixelBufferGetHeight(video)),
+					FourCC: NDIlib_FourCC_video_type_NV12,
+					frame_rate_N: 0,
+					frame_rate_D: 0,
+					picture_aspect_ratio: 0,
+					frame_format_type: NDIlib_frame_format_type_progressive,
+					timecode: NDIlib_send_timecode_synthesize,
+					p_data: CVPixelBufferGetBaseAddressOfPlane(video, 0)?.assumingMemoryBound(to: UInt8.self),
+					.init(line_stride_in_bytes: .init(CVPixelBufferGetBytesPerRowOfPlane(video, 0))),
+					p_metadata: $0,
+					timestamp: 0))
+			})
 		case kCVPixelFormatType_32BGRA where CVPixelBufferLockBaseAddress(video, .readOnly) == kCVReturnSuccess:
 			defer {
 				CVPixelBufferUnlockBaseAddress(video, .readOnly)
@@ -89,45 +188,6 @@ extension NDISend {
 					.init(line_stride_in_bytes: .init(CVPixelBufferGetBytesPerRow(video))),
 					p_metadata: $0,
 					timestamp: 0))
-			})
-		case kCVPixelFormatType_420YpCbCr8BiPlanarFullRange where CVPixelBufferLockBaseAddress(video, .readOnly) == kCVReturnSuccess:
-			defer {
-				CVPixelBufferUnlockBaseAddress(video, .readOnly)
-			}
-			return.success(xml.withOptionalCString {
-				send(frame: NDIlib_video_frame_v2_t(
-					xres: .init(CVPixelBufferGetWidthOfPlane(video, 0)),
-					yres: .init(CVPixelBufferGetHeightOfPlane(video, 0)),
-					FourCC: NDIlib_FourCC_video_type_NV12,
-					frame_rate_N: 0,
-					frame_rate_D: 0,
-					picture_aspect_ratio: 0,
-					frame_format_type: NDIlib_frame_format_type_progressive,
-					timecode: NDIlib_send_timecode_synthesize,
-					p_data: CVPixelBufferGetBaseAddressOfPlane(video, 0)?.assumingMemoryBound(to: UInt8.self),
-					.init(line_stride_in_bytes: .init(CVPixelBufferGetBytesPerRowOfPlane(video, 0))),
-					p_metadata: $0, 
-					timestamp: 0))
-			})
-		case kCVPixelFormatType_422YpCbCr8 where CVPixelBufferLockBaseAddress(video, .readOnly) == kCVReturnSuccess:
-			defer {
-				CVPixelBufferUnlockBaseAddress(video, .readOnly)
-			}
-			return.success(xml.withOptionalCString {
-				send(frame: NDIlib_video_frame_v2_t(
-					xres: .init(CVPixelBufferGetWidth(video)),
-					yres: .init(CVPixelBufferGetHeight(video)),
-					FourCC: NDIlib_FourCC_video_type_UYVY,
-					frame_rate_N: 0,
-					frame_rate_D: 0,
-					picture_aspect_ratio: 0,
-					frame_format_type: NDIlib_frame_format_type_progressive,
-					timecode: NDIlib_send_timecode_synthesize,
-					p_data: CVPixelBufferGetBaseAddress(video)?.assumingMemoryBound(to: UInt8.self),
-					.init(line_stride_in_bytes: .init(CVPixelBufferGetBytesPerRow(video))),
-					p_metadata: $0,
-					timestamp: 0)
-				)
 			})
 		case let other:
 			return.failure(.unsupported(format: other))
