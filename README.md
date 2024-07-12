@@ -1,6 +1,6 @@
 # NDI SDK for Apple Computers
 
-This repository provides a Swift Package as a wrapper to use NDI SDK on Apple computers, iOS, tvOS and macOS.
+This repository provides a Swift Package as a wrapper to use NDI SDK on Apple computers, including iOS, tvOS and macOS.
 
 ## Overview
 
