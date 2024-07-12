@@ -10,7 +10,7 @@ This library provides a wrapper to easily utilize the NDI SDK with Swift.
 
 ## SDK Requirements
 
-The NDI SDK is not included in this repository due to licensing constraints. Please download the installer pkg from [NDI.video](https://ndi.video/for-developers/ndi-sdk/download/). Our library assumes the NDI SDK will be installed at `/Library/NDI SDK for Apple`.
+This library is a wrapper and requires NDI SDK to work. The NDI SDK is however not included in this repository due to licensing constraints. Please download the installer pkg from [NDI.video](https://ndi.video/for-developers/ndi-sdk/download/). Our library assumes the NDI SDK will be installed at `/Library/NDI SDK for Apple`.
 You might need to manually link `libndi_ios.a`, `libndi_tvos.a` or `libndi.dylib` for your projects. Add one of them from the installed path `/Library/NDI SDK for Apple/lib/*`.
 
 ## Usage
@@ -27,10 +27,15 @@ let sender = NDISend(video: true)
 sender.send(frame: SOME_CVPixelBuffer) 
 ```
 Currently, only the following PixelFormats of CVPixelBuffer are supported:
-* kCVPixelFormatType_32BGRA
-* kCVPixelFormatType_32RGBA
-* kCVPixelFormatType_422YpCbCr8
-* kCVPixelFormatType_420YpCbCr8BiPlanarFullRange
+ - kCVPixelFormatType_422YpCbCr8 // UYVY in NDI
+ - kCVPixelFormatType_422YpCbCr_4A_8BiPlanar // UYVA in NDI
+ - kCVPixelFormatType_422YpCbCr16BiPlanarVideoRange // P216 in NDI
+ - kCVPixelFormatType_420YpCbCr8PlanarFullRange // I420 in NDI
+ - kCVPixelFormatType_420YpCbCr8BiPlanarFullRange // NV12 in NDI
+ - kCVPixelFormatType_32BGRA // BGRA or BGRX in NDI
+ - kCVPixelFormatType_32RGBA // RGBA or RGBX in NDI, it might not work with Apple Silicon
+
+PA16 and YV12 in NDI are not supported
 
 #### Video subscriber
 ```swift
