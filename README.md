@@ -27,10 +27,15 @@ let sender = NDISend(video: true)
 sender.send(frame: SOME_CVPixelBuffer) 
 ```
 Currently, only the following PixelFormats of CVPixelBuffer are supported:
-* kCVPixelFormatType_32BGRA
-* kCVPixelFormatType_32RGBA
-* kCVPixelFormatType_422YpCbCr8
-* kCVPixelFormatType_420YpCbCr8BiPlanarFullRange
+ - kCVPixelFormatType_422YpCbCr8 // UYVY in NDI
+ - kCVPixelFormatType_422YpCbCr_4A_8BiPlanar // UYVA in NDI
+ - kCVPixelFormatType_422YpCbCr16BiPlanarVideoRange // P216 in NDI
+ - kCVPixelFormatType_420YpCbCr8PlanarFullRange // I420 in NDI
+ - kCVPixelFormatType_420YpCbCr8BiPlanarFullRange // NV12 in NDI
+ - kCVPixelFormatType_32BGRA // BGRA or BGRX in NDI
+ - kCVPixelFormatType_32RGBA // RGBA or RGBX in NDI, it might not work with Apple Silicon
+
+PA16 and YV12 in NDI are not supported
 
 #### Video subscriber
 ```swift
