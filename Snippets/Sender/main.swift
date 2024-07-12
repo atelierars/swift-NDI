@@ -47,7 +47,12 @@ final class Sender: NSObject {
 
 		let target = AVCaptureVideoDataOutput()
 		target.videoSettings = [
-			kCVPixelBufferPixelFormatTypeKey as String: kCVPixelFormatType_422YpCbCr8 // UYUV
+//			kCVPixelBufferPixelFormatTypeKey as String: kCVPixelFormatType_422YpCbCr8 // UYVY
+//			kCVPixelBufferPixelFormatTypeKey as String: kCVPixelFormatType_422YpCbCr_4A_8BiPlanar // UYVA
+			kCVPixelBufferPixelFormatTypeKey as String: kCVPixelFormatType_422YpCbCr16BiPlanarVideoRange // P216
+			// PA16 is not compatible
+			// YV12 is not compatible
+//			kCVPixelBufferPixelFormatTypeKey as String: kCVPixelFormatType_420YpCbCr8PlanarFullRange // I420
 //			kCVPixelBufferPixelFormatTypeKey as String: kCVPixelFormatType_420YpCbCr8BiPlanarFullRange // NV12
 //			kCVPixelBufferPixelFormatTypeKey as String: kCVPixelFormatType_32BGRA // BGRA or BGRX
 //			kCVPixelBufferPixelFormatTypeKey as String: kCVPixelFormatType_32RGBA // RGBA or RGBX, it might not work with Apple Silicon
@@ -70,6 +75,7 @@ extension Sender: AVCaptureVideoDataOutputSampleBufferDelegate {
 		switch CMSampleBufferGetImageBuffer(sampleBuffer) {
 		case.some(let frame):
 			// Send captured video frame with NDI
+			print(CVPixelBufferGetPixelFormatType(frame) == kCVPixelFormatType_32RGBA)
 			sender.send(frame: frame)
 		case.none:
 			break
