@@ -1,6 +1,6 @@
 # NDI SDK for Apple Computers - Swift Package Manager Integration
 
-This repository provides a wrapper for Swift to use NDI SDK on Apple computers.
+This repository provides a wrapper for Swift to use NDI SDK on Apple computers, iOS, tvOS and macOS.
 
 ## Overview
 
