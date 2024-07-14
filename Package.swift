@@ -1,6 +1,13 @@
 // swift-tools-version: 5.9
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 import PackageDescription
+let unsafeLinkerFlags = [
+	.unsafeFlags([
+		"-L/Library/NDI SDK for Apple/lib/macOS",
+		"-L/Library/NDI SDK for Apple/lib/iOS",
+		"-L/Library/NDI SDK for Apple/lib/tvOS",
+	])
+] as [LinkerSetting]
 let package = Package(
 	name: "NDI",
 	platforms: [
@@ -19,7 +26,7 @@ let package = Package(
 			name: "NDILib",
 			dependencies: ["NDISDK"],
 			linkerSettings: [
-				/* We cannot use unsafe flag for some application projects 😭 */
+				/* Forbidden to use unsafe flags within standard app projects 😭 */
 //				.unsafeFlags([
 //					"-L/Library/NDI SDK for Apple/lib/macOS",
 //					"-L/Library/NDI SDK for Apple/lib/iOS",
@@ -34,14 +41,24 @@ let package = Package(
 			name: "NDISDK"
 		),
 		.executableTarget(
-			name: "Example-Sender",
-			dependencies: ["NDILib"],
-			path: "Snippets/Sender"
-		),
-		.executableTarget(
 			name: "Example-Receiver",
 			dependencies: ["NDILib"],
 			path: "Snippets/Receiver"
+		),
+		.executableTarget(
+			name: "Example-Sender-Camera",
+			dependencies: ["NDILib"],
+			path: "Snippets/Camera"
+		),
+		.executableTarget(
+			name: "Example-Sender-Player",
+			dependencies: ["NDILib"],
+			path: "Snippets/Player"
+		),
+		.executableTarget(
+			name: "Example-Sender-QRCode",
+			dependencies: ["NDILib"],
+			path: "Snippets/QRCode"
 		),
 		.testTarget(
 			name: "NDILibTests",
@@ -49,3 +66,4 @@ let package = Package(
 		)
 	]
 )
+
