@@ -19,7 +19,7 @@ final class Controller {
 		find = .init(local: true)
 		
 		// Create NDI Receiver to decode received frame
-		recv = .init(colorFormat: .fastest)
+		recv = .init(colorFormat: .uyuvbgra, bandwidth: .max)
 		
 		// Use nsimage as a container to hold received video frame
 		nsImage = .init(size: .init(width: 256, height: 256))
