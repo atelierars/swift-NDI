@@ -11,7 +11,7 @@ This library provides a wrapper to easily utilize the NDI SDK with Swift.
 ## SDK Requirements
 
 This library NDI SDK to work as a wrapper. The NDI SDK is however not included in this repository due to their licensing constraints. Please download the installer pkg from [NDI.video](https://ndi.video/for-developers/ndi-sdk/download/). Our library assumes the NDI SDK will be installed at `/Library/NDI SDK for Apple`.
-You might need to manually link `libndi_ios.a`, `libndi_tvos.a` or `libndi.dylib` for your projects. Add one of them from the installed path `/Library/NDI SDK for Apple/lib/*`. Especially on macOS, you might need to embed `libndi.dylib`.
+You might need to manually link `libndi_ios.a`, `libndi_tvos.a` or `libndi.dylib` for your projects. Add one of them from the installed path `/Library/NDI SDK for Apple/lib/*`. Especially on macOS, you might need to embed `libndi.dylib` into your project bundle.
 
 ## Usage
 
