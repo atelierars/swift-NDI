@@ -239,7 +239,7 @@ extension NDISend {
 }
 extension UnsafeMutableAudioBufferListPointer {
 	@inlinable
-	var memoryStride: Optional<Int> {
+	var memoryStride: Optional<UnsafeRawPointer.Stride> {
 		let Δ = zip(dropLast(), dropFirst()).compactMap {
 			switch ($0.mData, $1.mData) {
 			case let(.some(s), .some(t)):
