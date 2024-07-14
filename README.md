@@ -33,21 +33,20 @@ Currently, only the following PixelFormats of CVPixelBuffer are supported:
  - kCVPixelFormatType_420YpCbCr8PlanarFullRange // I420 in NDI
  - kCVPixelFormatType_420YpCbCr8BiPlanarFullRange // NV12 in NDI
  - kCVPixelFormatType_32BGRA // BGRA or BGRX in NDI
- - kCVPixelFormatType_32RGBA // RGBA or RGBX in NDI, it might not work with Apple Silicon
+ - kCVPixelFormatType_32RGBA // RGBA or RGBX in NDI
 
 PA16 and YV12 in NDI are not supported
 
 #### Video subscriber
 ```swift
-import NDILib
 let finder = NDIFind()
-if finder.wait(for: .second(5)) { // discover NDI source for 5 second
+ if finder.wait(for: .seconds(5)) { // discover NDI source for 5 second
   let receiver = NDIRecv(colorFormat: .brgxbrga, bandwidth: .max) // receive color format is BGRA
-  receiver.conect(to: finder.sources[0]) // connect to first discovered source
+  receiver.connect(to: finder.sources[0]) // connect to first discovered source
   while true {
-    if let video: CVPixelBuffer = receiver.capture(for: .milliseconds(100)) {
-       SOME_PROCESS(capturedCVPixelBuffer: video)
-    }
+   if let video: CVPixelBuffer = receiver.capture(for: .milliseconds(100)) {
+   SOME_PROCESS(capturedCVPixelBuffer: video)
   }
+ }
 }
 ```
