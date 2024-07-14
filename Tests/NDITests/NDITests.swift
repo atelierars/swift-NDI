@@ -26,7 +26,7 @@ final class NDILibTests: XCTestCase {
 			XCTFail("No video source has been found")
 			return
 		}
-		let recv = NDIRecv(colorFormat: .brgxbrga, bandwidth: .max)
+		let recv = NDIRecv(colorFormat: .fastest)
 		recv.connect(to: source)
 		wait(for: [sent], timeout: 0)
 		let captured = Array<Duration>(repeating: .seconds(1), count: 16).compactMap(recv.capture(for:)) as Array<CVPixelBuffer>
