@@ -1,13 +1,6 @@
 // swift-tools-version: 5.9
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 import PackageDescription
-let unsafeLinkerFlags = [
-	.unsafeFlags([
-		"-L/Library/NDI SDK for Apple/lib/macOS",
-		"-L/Library/NDI SDK for Apple/lib/iOS",
-		"-L/Library/NDI SDK for Apple/lib/tvOS",
-	])
-] as [LinkerSetting]
 let package = Package(
 	name: "NDI",
 	platforms: [
@@ -62,7 +55,8 @@ let package = Package(
 		),
 		.testTarget(
 			name: "NDILibTests",
-			dependencies: ["NDILib"]
+			dependencies: ["NDILib"],
+			path: "Tests"
 		)
 	]
 )
